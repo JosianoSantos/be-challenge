@@ -34,7 +34,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'be_challenge.urls'
+ROOT_URLCONF = 'be-challenge.urls'
 
 TEMPLATES = [
     {
@@ -53,7 +53,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'be_challenge.wsgi.application'
+WSGI_APPLICATION = 'be-challenge.wsgi.application'
 
 DATABASES = {
     'default': {
