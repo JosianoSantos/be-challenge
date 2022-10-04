@@ -1,4 +1,5 @@
 from django.db import transaction
+from django.http import Http404
 from django.utils.decorators import method_decorator
 from drf_spectacular.utils import extend_schema, OpenApiParameter
 from rest_framework import viewsets
@@ -7,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST
 
 from apps.football_data.api.filters import TeamMemberFilter, TeamFilter, MemberOfTeamFilter
-from apps.football_data.api.serializers import TeamSerializer, TeamMemberSerializer, ImportCompetiitonSerializer, \
+from apps.football_data.api.serializers import TeamSerializer, TeamMemberSerializer, ImportCompetitionSerializer, \
     CompetitionSerializer
 from apps.football_data.football_api import FootballAPI
 from apps.football_data.models import TeamMember, Team
@@ -15,12 +16,12 @@ from apps.football_data.models import TeamMember, Team
 from apps.football_data.api import services
 
 
-class CompetitionViewset(viewsets.ViewSet):
-    serializer_class = ImportCompetiitonSerializer
+class CompetitionViewset(viewsets.GenericViewSet):
+    serializer_class = CompetitionSerializer
     http_method_names = ['post']
 
     @extend_schema(
-        request=ImportCompetiitonSerializer,
+        request=ImportCompetitionSerializer,
         responses={201: CompetitionSerializer},
     )
     @action(methods=["post"], detail=False)
@@ -78,6 +79,12 @@ class TeamMemberViewSet(viewsets.ModelViewSet):
     serializer_class = TeamMemberSerializer
     http_method_names = ['get']
     filterset_class = TeamMemberFilter
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        if not queryset:
+            raise Http404
+        return super(TeamMemberViewSet, self).list(args, kwargs)
 
 
 class MemberOfTeamViewSet(viewsets.ModelViewSet):

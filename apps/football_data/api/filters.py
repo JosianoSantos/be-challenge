@@ -21,8 +21,8 @@ class MemberOfTeamFilter(filters.FilterSet):
 
 
 class TeamFilter(filters.FilterSet):
-    team_name = filters.CharFilter(field_name='team__name', lookup_expr='icontains')
+    name = filters.CharFilter(field_name='name', lookup_expr='icontains')
 
     class Meta:
         model = Team
-        fields = ['team_name']
+        fields = ['name']

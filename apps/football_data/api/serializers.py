@@ -3,7 +3,7 @@ from rest_framework import serializers
 from apps.football_data.models import Team, TeamMember, Competition
 
 
-class ImportCompetiitonSerializer(serializers.Serializer):
+class ImportCompetitionSerializer(serializers.Serializer):
     league_code = serializers.CharField()
 
 
