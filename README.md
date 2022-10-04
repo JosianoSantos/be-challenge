@@ -11,7 +11,9 @@ so a field  called "role" was created to determine if it's either a coach or pla
 
 #  Database:
 Since it's a small project, with no large amount of data, 
-just as was deployed on a limited free hosting platform (pythonanywhere.com), SQLite3 was chosen to handle our data. 
+just as was deployed on a free and limited hosting platform (pythonanywhere.com), SQLite3 was chosen to handle our data.
+
+.env database config allows to use another database configuration.
 
 #  Third party libraries:
 
@@ -41,6 +43,18 @@ With docker installed in your OS, access the project root and run:
 Create VirtualEnv with python 3.10+ 
 
 Install requirements: `pip install -r requirements.txt `
+
+Create your .env file.
+
+Here are the .env variables used for the project:
+
+`DATABASE_URL=sqlite://./db.sqlite3`
+
+`FOOTBALL_DATA_API_TOKEN='063796335a0e4a71af30ea480138011a' `
+
+You can use another database and your own football data api token.
+
+Aply migrations: `python manage.py migrate`
 
 Run: `python manage.py runserver`
 

@@ -1,4 +1,9 @@
+import os
 from pathlib import Path
+
+from decouple import config
+from dj_database_url import parse as db_url
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -55,11 +60,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'be-challenge.wsgi.application'
 
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': config(
+        'DATABASE_URL',
+        default='sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3'),
+        cast=db_url
+    )
 }
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -96,7 +103,7 @@ REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
-FOOTBALL_DATA_API_TOKEN = '063796335a0e4a71af30ea480138011a'
+FOOTBALL_DATA_API_TOKEN = config('FOOTBALL_DATA_API_TOKEN')
 
 SPECTACULAR_SETTINGS = {
     'TITLE': 'Backend Cahllenge Python',
